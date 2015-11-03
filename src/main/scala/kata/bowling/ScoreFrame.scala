@@ -5,7 +5,7 @@ class ScoreFrame {
   var adjustedScores = List[Int]()
 
   def record(ball: Ball): Unit = {
-    if(finishAllBalls) {
+    if(finishAllBalls()) {
       throw new MaximumFrameBallsExceededException
     }
 
@@ -45,11 +45,11 @@ class ScoreFrame {
   }
 
   private def hasStrike(): Boolean = {
-    balls.exists(b => b.isStrike())
+    balls.exists(_.isStrike())
   }
 
   private def calculateOriginalScore(): Int = {
-    balls.map(f => f.pins).sum
+    balls.map(_.pins).sum
   }
 
   private def calculateAdjustedScore(): Int = {
@@ -57,6 +57,6 @@ class ScoreFrame {
   }
 
   private def firstBallIsStrike(): Boolean = {
-    balls.length == 1 && balls(0).isStrike()
+    balls.length == 1 && balls.head.isStrike()
   }
 }

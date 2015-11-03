@@ -24,7 +24,7 @@ class BowlingGame {
   }
 
   def score(): Int = {
-    frames.take(noOfOfficialFrames).map(f => f.score()).sum
+    frames.take(noOfOfficialFrames).map(_.score).sum
   }
 
   def scoreForFrame(frameNo: Int): Int = {
@@ -36,12 +36,12 @@ class BowlingGame {
   }
 
   override def toString(): String = {
-    frames.map(f => f.score()).mkString(", ")
+    frames.map(_.score()).mkString(", ")
   }
 
   private def adjustScoreForStrikeAndSpareFrames(ball: Ball, currentFrame: ScoreFrame): Unit = {
-    pendingStrikeAndSpareFrames.foreach(p => p.adjustScore(ball))
-    pendingStrikeAndSpareFrames = pendingStrikeAndSpareFrames.filter(p => !p.scoreAdjusted())
+    pendingStrikeAndSpareFrames.foreach(_.adjustScore(ball))
+    pendingStrikeAndSpareFrames = pendingStrikeAndSpareFrames.filter(!_.scoreAdjusted())
 
     if(ball.isStrike() || currentFrame.hasSpare()) {
       pendingStrikeAndSpareFrames = pendingStrikeAndSpareFrames.::(currentFrame)
